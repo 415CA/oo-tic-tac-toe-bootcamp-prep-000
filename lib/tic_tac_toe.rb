@@ -57,23 +57,61 @@ class TicTacToe
     puts display_board(@board)
   end
 
-  def turn_count(@board)
-    counter = 0
-    @board.each do |item|
-    if item == "X" || item == "O"
-      counter += 1
-    end
+  def turn_count
+    @board.count{|token| token == "X" || token == "O"}
   end
-  counter
-end
 
   def current_player
     turn_count % 2 == 0 ? "X" : "O"
   end
 
-  def turn_count
-    @board.count{|token| token == "X" || token == "O"}
+  def won?(@board)
+    WIN_COMBINATIONS.detect do |win_combination|
+      win_index_0 = win_combination[0]
+      win_index_1 = win_combination[1]
+      win_index_2 = win_combination[2]
+
+      position_0 = @board[win_index_0]
+      position_1 = @board[win_index_1]
+      position_2 = @board[win_index_2]
+
+      if position_0 == position_1 && position_1 == position_2 && position_taken?(board, win_index_0)
+        return win_combination
+      end
+    end
+    return false
   end
 
+  def full?(@board)
+    @board.none? {|index| index == nil || index == " "}
+  end
+
+  def draw?(@board)
+  !won?(board) && full?(board)
+end
+
+def over?(@board)
+  draw?(@board) || won?(@board)
+end
+
+def winner(@board)
+  win_combination = won?(@board)
+  if win_combination
+    win_location = win_combination[0]
+    return @board[win_location]
+  end
+end
+
+def play(@board)
+
+  until over?(@board)
+    turn(@board)
+  end
+
+  if won?(@board)
+    puts "Congratulations #{winner(board)}!"
+  elsif draw?(@board)
+    puts "Cat's Game!"
+  end
 
 end
