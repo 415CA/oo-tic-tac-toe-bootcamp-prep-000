@@ -99,7 +99,7 @@ class TicTacToe
   end
 
   def play
-    until over?
+    while !over?
       turn
     end
 
@@ -109,5 +109,5 @@ class TicTacToe
       puts "Cat's Game!"
     end
   end
-  
+
 end
