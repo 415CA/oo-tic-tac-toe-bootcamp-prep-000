@@ -46,9 +46,9 @@ class TicTacToe
     index = input_to_index(gets.strip)
     if valid_move?(index)
       player = current_player(board)
-      move(@board, index, player)
+      move(index, player)
     else
-      turn(@board)
+      turn
     end
     puts display_board
   end
@@ -71,11 +71,11 @@ class TicTacToe
       position_1 = @board[win_index_1]
       position_2 = @board[win_index_2]
 
-      if position_0 == position_1 && position_1 == position_2 && position_taken?(board, win_index_0)
+      if position_0 == position_1 && position_1 == position_2 && position_taken?(win_index_0)
         return win_combination
       end
     end
-    return false
+    false
   end
 
   def full?
@@ -83,24 +83,24 @@ class TicTacToe
   end
 
   def draw?
-  !won? && full?
-end
-
-def over?
-  draw? || won?
-end
-
-def winner
-  win_combination = won?
-  if win_combination
-    win_location = win_combination[0]
-    return @board[win_location]
+    !won? && full?
   end
-end
 
-def play
-  until over?
-    turn
+  def over?
+    draw? || won?
+  end
+
+  def winner
+    win_combination = won?
+    if win_combination
+      win_location = win_combination[0]
+      return @board[win_location]
+    end
+  end
+
+  def play
+    until over?
+      turn
   end
 
   if won?
