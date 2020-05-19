@@ -103,7 +103,6 @@ def winner
 end
 
 def play
-
   until over?(@board)
     turn(@board)
   end
@@ -114,5 +113,5 @@ def play
     puts "Cat's Game!"
   end
 
-end
+  end
 end
